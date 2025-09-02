@@ -7,9 +7,14 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Puissance 4")
 
 jeton_rouge = pygame.image.load("image/jeton rouge.png").convert_alpha()
+
 jeton_rouge = pygame.transform.scale(jeton_rouge, (50, 50))
 jeton_jaune = pygame.image.load("image/jeton jaune.png").convert_alpha()
 jeton_jaune = pygame.transform.scale(jeton_jaune, (50, 50))
+
+jeton_rouge = pygame.transform.scale(jeton_rouge, (200, 200))
+jeton_jaune = pygame.image.load("image/jeton jaune.png").convert_alpha()
+jeton_jaune = pygame.transform.scale(jeton_jaune, (200, 200))
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 30)
@@ -37,6 +42,11 @@ while running:
             vy = 0 
         if any(jetons[j][1] == x and jetons[j][2] > y for j in range(i)):
             target.top -= img.get_height()
+
+        for j, (img2, x2, y2, vy2) in enumerate(jetons[:i]):
+            if abs(x - x2) < 5 and y + img.get_height() >= y2:
+                y = y2 - img.get_height()
+                vy = 0
 
         jetons[i] = (img, x, y, vy)
         screen.blit(img, (x, y))
